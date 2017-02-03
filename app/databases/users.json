@@ -2,6 +2,13 @@
   {
     "name": "Vasya"
   },
-  null,
-  null
+  {
+    "name": "Petya"
+  },
+  {
+    "name": "Nastya"
+  },
+  {
+    "name": "Bob"
+  }
 ]
