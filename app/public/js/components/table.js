@@ -1,52 +1,34 @@
 "use strict";
+const request = require("./request");
+const deleteUser = require("./deleteMethod");
 
-module.exports = function(){
-/*    let test = '';
-    console.log('>>',test,'<<');
-    let promise = new Promise((resolve) => {
-        setTimeout(resolve, 500, 'promise resolved after 500 ms');
-    });
-    promise.then(console.log.bind(console))*/
+module.exports = function () {
 
-
-
-    let request = obj => {
-        return new Promise((resolve, reject) => {
-            let xhr = new XMLHttpRequest();
-            xhr.open(obj.method || "GET", obj.url);
-            if (obj.headers) {
-                Object.keys(obj.headers).forEach(key => {
-                    xhr.setRequestHeader(key, obj.headers[key]);
-                });
-            }
-            xhr.onload = () => {
-                if (xhr.status >= 200 && xhr.status < 300) {
-                    resolve(xhr.response);
-                } else {
-                    reject(xhr.statusText);
-                }
-            };
-            xhr.onerror = () => reject(xhr.statusText);
-            xhr.send(obj.body);
-        });
-    };
-
-    request({url: "/users"})
+    request({method: "GET", url: "/users"})
         .then(data => {
             let users = JSON.parse(data);
             let html = "";
             users.forEach((user, id) => {
-                html += `
-                <tr>
+                if (user) {
+                    html += `
+                <tr class="users">
                     <td>${id}</td>
                     <td>${user.name}</td>
-                    <td><a href="#delete">Удалить</a> | <a href="#update">Изменить</a></td>
+                    <td><a href="#delete" class="delete">Удалить</a> | <a href="#update">Изменить</a></td>
                 </tr>`;
-
+                }
             });
             document.getElementById("tableUsers").innerHTML = html;
+
+            let deleteButtons = document.getElementsByClassName("delete");
+            for(let i = 0, len = deleteButtons.length; i < len; i++) {
+                deleteButtons[i].addEventListener("click", deleteUser);
+            }
         })
         .catch(error => {
             console.log(error);
         });
+
+
+
 };
