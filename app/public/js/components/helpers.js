@@ -1,28 +1,32 @@
 "use strict";
 
 const request = require("./request");
+const updateBtn = require("./helpers");
 
-function updateDB () {
+function updateDB() {
     let id = this.parentNode.parentNode.parentNode.childNodes[1].textContent;
     let newName = this.previousSibling.previousSibling.childNodes[1].value;
-    console.log(id);
-    console.log(newName);
-    request({method: "PUT",
+    request({
+        method: "PUT",
         url: `/users/${Number(id)}`,
-        // url: `/users/`+id,
-        headers : [`Content-Type`, `application/json`],
-        body: JSON.stringify({name: newName})})
-        // json: {name: newName}})
-        // body: {name: newName}})
-        .then((body) => {
-            console.log(body);
-        })
-        .catch(error => {
-            console.log(error);
-        });
+        headers: ['Content-Type', 'application/json'],
+        body: JSON.stringify({name: newName})
+    }).then(() => {
+        let id = this.parentNode.parentNode.parentNode.childNodes[1].textContent;
+        let updatedRow = this.parentNode.parentNode.parentNode;
+        updatedRow.innerHTML = `<tr class="users">
+                <td class="user_id">${id}</td>
+                <td>${newName}</td>
+                <td><a href="#delete" class="delete">Удалить</a> | <a href="#update">Изменить</a></td>
+                </tr>`;
+        console.log(updatedRow.childNodes[5].childNodes[2]);
+        return updatedRow;
+    }).then((updatedRow) => {
+        updatedRow.childNodes[5].childNodes[2].addEventListener("click", updateBtn.updateForm);
+
+    });
+
 }
-
-
 
 module.exports = {
 
@@ -40,8 +44,6 @@ module.exports = {
     },
 
     updateForm: function () {
-        // let name = this.parentNode.previousSibling.previousSibling.textContent;
-        // let id = this.parentNode.previousSibling.previousSibling.previousSibling.textContent
         this.parentNode.innerHTML = `<td></td><form action="" class="form-inline">
             <div class="form-group">
             <input class="form-control" type="text">
