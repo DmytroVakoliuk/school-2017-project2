@@ -3,30 +3,25 @@
 const request = require("./request");
 
 function updateDB() {
-    let id = this.parentNode.childNodes[1].textContent;
-    let newName = this.previousSibling.previousSibling.childNodes[1].value;
-    request({
-        method: "PUT",
-        url: `/users/${Number(id)}`,
-        body: JSON.stringify({name: newName})
-    }).then(() => {
-        let id = this.parentNode.parentNode.parentNode.childNodes[0].textContent;
-        console.log(this.parentNode.parentNode.parentNode.childNodes[0]);
-        let updatedRow = this.parentNode.parentNode.parentNode;
-        updatedRow.innerHTML = row(id, newName);
-        listeners();
-    }).catch(error => {
-        console.log(error);
-    });
+    let id = this.parentNode.parentNode.parentNode.childNodes[0].textContent;
+    let newName = this.previousSibling.childNodes[0].value;
+    if(newName){
+        request({
+            method: "PUT",
+            url: `/users/${Number(id)}`,
+            body: JSON.stringify({name: newName})
+        }).then(() => {
+            let updatedRow = this.parentNode.parentNode.parentNode;
+            updatedRow.innerHTML = row(id, newName);
+            listeners();
+        }).catch(error => {
+            console.log(error);
+        });
+    }
 }
 
 function updateForm() {
-    this.parentNode.innerHTML = `<form action="" class="form-inline">
-            <div class="form-group">
-            <input class="form-control" type="text">
-            </div>
-            <button type="button" class="updateBtn btn btn-primary">Изменить</button>
-            </form>`;
+    this.parentNode.innerHTML = `<form action="" class="form-inline"><div class="form-group"><input class="form-control" type="text"></div><button type="button" class="updateBtn btn btn-primary">Изменить</button></form>`;
     let updateButtons = document.getElementsByClassName("updateBtn");
     for (let i = 0, len = updateButtons.length; i < len; i++) {
         updateButtons[i].addEventListener("click", updateDB);

@@ -16,9 +16,7 @@ function addUser() {
             }).then((data) => {
                 let id =JSON.parse(data);
                 let row = document.createElement("TR");
-                row.innerHTML = `<td>${id.id}</td>
-                                <td>${name}</td>
-                                <td><a href="#delete" class="delete">Удалить</a> | <a href="#update">Изменить</a></td>`;
+                row.innerHTML = `<td>${id.id}</td><td>${name}</td><td><a href="#delete" class="delete">Удалить</a> | <a href="#update">Изменить</a></td>`;
                 document.getElementById("tableUsers").appendChild(row);
 
             }).then(() => {
