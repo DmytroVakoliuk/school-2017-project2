@@ -10,21 +10,12 @@ module.exports = function () {
             let html = "";
             users.forEach((user, id) => {
                 if (user) {
-                    html += `
-                <tr class="users">
-                    <td class="user_id">${id}</td>
-                    <td>${user.name}</td>
-                    <td><a href="#delete" class="delete">Удалить</a> | <a href="#update">Изменить</a></td>
-                </tr>`;
+                    html += helpers.row(id, user.name);
                 }
             });
             document.getElementById("tableUsers").innerHTML = html;
 
-            let deleteButtons = document.getElementsByClassName("delete");
-            for (let i = 0, len = deleteButtons.length; i < len; i++) {
-                deleteButtons[i].addEventListener("click", helpers.deleteRow);
-                deleteButtons[i].nextSibling.nextSibling.addEventListener("click", helpers.updateForm);
-            }
+            helpers.listeners();
         })
         .catch(error => {
             console.log(error);

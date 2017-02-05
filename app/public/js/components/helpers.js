@@ -3,45 +3,38 @@
 const request = require("./request");
 
 function updateDB() {
-    let id = this.parentNode.parentNode.parentNode.childNodes[1].textContent;
+    let id = this.parentNode.childNodes[1].textContent;
     let newName = this.previousSibling.previousSibling.childNodes[1].value;
     request({
         method: "PUT",
         url: `/users/${Number(id)}`,
-        headers: ['Content-Type', 'application/json'],
         body: JSON.stringify({name: newName})
     }).then(() => {
-        let id = this.parentNode.parentNode.parentNode.childNodes[1].textContent;
+        let id = this.parentNode.parentNode.parentNode.childNodes[0].textContent;
+        console.log(this.parentNode.parentNode.parentNode.childNodes[0]);
         let updatedRow = this.parentNode.parentNode.parentNode;
-        updatedRow.innerHTML = `<tr class="users">
-                <td class="user_id">${id}</td>
-                <td>${newName}</td>
-                <td><a href="#delete" class="delete">Удалить</a> | <a href="#update">Изменить</a></td>
-                </tr>`;
-        updatedRow.childNodes[5].childNodes[2].addEventListener("click", form);
+        updatedRow.innerHTML = row(id, newName);
+        listeners();
     }).catch(error => {
         console.log(error);
     });
-
 }
-let form = function () {
-    this.parentNode.innerHTML = `<td></td><form action="" class="form-inline">
+
+function updateForm() {
+    this.parentNode.innerHTML = `<form action="" class="form-inline">
             <div class="form-group">
             <input class="form-control" type="text">
             </div>
-            <button type="submit" class="updateBtn btn btn-primary">Изменить</button>
-            </form></td>`;
+            <button type="button" class="updateBtn btn btn-primary">Изменить</button>
+            </form>`;
     let updateButtons = document.getElementsByClassName("updateBtn");
     for (let i = 0, len = updateButtons.length; i < len; i++) {
         updateButtons[i].addEventListener("click", updateDB);
     }
-};
-module.exports = {
+}
 
-    deleteRow: function () {
-
-        let id = this.parentNode.previousSibling.previousSibling.previousSibling.previousSibling.textContent;
-
+function deleteRow() {
+        let id = this.parentNode.previousSibling.previousSibling.textContent;
         request({method: "DELETE", url: `/users/${Number(id)}`})
             .then(() => {
                 this.parentNode.parentNode.remove();
@@ -49,7 +42,24 @@ module.exports = {
             .catch(error => {
                 console.log(error);
             });
-    },
+}
 
-    updateForm: form
+let row = (id, name) => {
+    let html = `<tr><td class="user_id">${id}</td><td>${name}</td><td><a href="#delete" class="delete">Удалить</a> | <a href="#update">Изменить</a></td></tr>`;
+    return html;
+};
+
+function listeners() {
+    let deleteButtons = document.getElementsByClassName("delete");
+    for (let i = 0, len = deleteButtons.length; i < len; i++) {
+        deleteButtons[i].addEventListener("click", deleteRow);
+        deleteButtons[i].nextSibling.nextSibling.addEventListener("click", updateForm);
+    }
+}
+
+module.exports = {
+
+    row: row,
+
+    listeners: listeners
 };
