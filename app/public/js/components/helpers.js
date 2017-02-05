@@ -1,7 +1,6 @@
 "use strict";
 
 const request = require("./request");
-const updateBtn = require("./helpers");
 
 function updateDB() {
     let id = this.parentNode.parentNode.parentNode.childNodes[1].textContent;
@@ -19,18 +18,27 @@ function updateDB() {
                 <td>${newName}</td>
                 <td><a href="#delete" class="delete">Удалить</a> | <a href="#update">Изменить</a></td>
                 </tr>`;
-        console.log(updatedRow.childNodes[5].childNodes[2]);
-        return updatedRow;
-    }).then((updatedRow) => {
-        updatedRow.childNodes[5].childNodes[2].addEventListener("click", updateBtn.updateForm);
-
+        updatedRow.childNodes[5].childNodes[2].addEventListener("click", form);
+    }).catch(error => {
+        console.log(error);
     });
 
 }
-
+let form = function () {
+    this.parentNode.innerHTML = `<td></td><form action="" class="form-inline">
+            <div class="form-group">
+            <input class="form-control" type="text">
+            </div>
+            <button type="submit" class="updateBtn btn btn-primary">Изменить</button>
+            </form></td>`;
+    let updateButtons = document.getElementsByClassName("updateBtn");
+    for (let i = 0, len = updateButtons.length; i < len; i++) {
+        updateButtons[i].addEventListener("click", updateDB);
+    }
+};
 module.exports = {
 
-    deleteForm: function () {
+    deleteRow: function () {
 
         let id = this.parentNode.previousSibling.previousSibling.previousSibling.previousSibling.textContent;
 
@@ -43,17 +51,5 @@ module.exports = {
             });
     },
 
-    updateForm: function () {
-        this.parentNode.innerHTML = `<td></td><form action="" class="form-inline">
-            <div class="form-group">
-            <input class="form-control" type="text">
-            </div>
-            <button type="submit" class="updateBtn btn btn-primary">Изменить</button>
-            </form></td>`;
-        let updateButtons = document.getElementsByClassName("updateBtn");
-        for (let i = 0, len = updateButtons.length; i < len; i++) {
-            updateButtons[i].addEventListener("click", updateDB);
-        }
-    }
-
+    updateForm: form
 };

@@ -14,7 +14,7 @@ module.exports = function () {
                 <tr class="users">
                     <td class="user_id">${id}</td>
                     <td>${user.name}</td>
-                    <td><a href="#delete" class="delete">Удалить</a> | <a href="#update" class="updateF">Изменить</a></td>
+                    <td><a href="#delete" class="delete">Удалить</a> | <a href="#update">Изменить</a></td>
                 </tr>`;
                 }
             });
@@ -22,7 +22,7 @@ module.exports = function () {
 
             let deleteButtons = document.getElementsByClassName("delete");
             for (let i = 0, len = deleteButtons.length; i < len; i++) {
-                deleteButtons[i].addEventListener("click", helpers.deleteForm);
+                deleteButtons[i].addEventListener("click", helpers.deleteRow);
                 deleteButtons[i].nextSibling.nextSibling.addEventListener("click", helpers.updateForm);
             }
         })
