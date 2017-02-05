@@ -12,9 +12,9 @@ module.exports = function () {
                 if (user) {
                     html += `
                 <tr class="users">
-                    <td>${id}</td>
+                    <td class="user_id">${id}</td>
                     <td>${user.name}</td>
-                    <td><a href="#delete" class="delete">Удалить</a> | <a href="#update">Изменить</a></td>
+                    <td><a href="#delete" class="delete">Удалить</a> | <a href="#update" class="updateF">Изменить</a></td>
                 </tr>`;
                 }
             });
