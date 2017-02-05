@@ -28,6 +28,8 @@ router.get("/users/:id", async(ctx, next) => {
  * @example curl -v -X POST "http://127.0.0.1:3000/users" -d '{"name": "Vasya"}' -H "Content-Type: application/json"
  */
 router.post('/users', bodyParser(), async(ctx, next) => {
+    console.log(ctx.request.body);
+
     let userId = await usersModel.add(ctx.request.body);
     if (typeof userId === 'number') {
         ctx.status = 201;
@@ -41,6 +43,7 @@ router.post('/users', bodyParser(), async(ctx, next) => {
  * @example curl -v -X PUT "http://127.0.0.1:3000/users/1" -d '{"name":"Petya"}' -H "Content-Type: application/json"
  */
 router.put('/users/:id', bodyParser(), async(ctx, next) => {
+    console.log(ctx.request.body);
     try {
         await usersModel.update(ctx.params.id, ctx.request.body);
         ctx.status = 200;
@@ -53,8 +56,10 @@ router.put('/users/:id', bodyParser(), async(ctx, next) => {
  * @example curl -v -X DELETE "http://127.0.0.1:3000/users/1"
  */
 router.del("/users/:id", async(ctx, next) => {
+    console.log(ctx);
+
     try {
-        await usersModel.remove(ctx.params.id)
+        await usersModel.remove(ctx.params.id);
         ctx.status = 204;
     } catch (e) {
         ctx.status = 400

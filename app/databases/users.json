@@ -1,19 +1,4 @@
 [
-  null,
-  null,
-  null,
-  null,
-  null,
-  {
-    "name": "Nastya"
-  },
-  {
-    "name": "Bob"
-  },
-  null,
-  {
-    "name": "Petya"
-  },
   {
     "name": "Nastya"
   },
@@ -105,39 +90,6 @@
     "name": "Bob"
   },
   {
-    "name": "Vasya"
-  },
-  {
-    "name": "Petya"
-  },
-  {
-    "name": "Nastya"
-  },
-  {
-    "name": "Bob"
-  },
-  {
-    "name": "Vasya"
-  },
-  {
-    "name": "Petya"
-  },
-  {
-    "name": "Nastya"
-  },
-  {
-    "name": "Bob"
-  },
-  {
-    "name": "Vasya"
-  },
-  {
-    "name": "Petya"
-  },
-  {
-    "name": "Nastya"
-  },
-  {
-    "name": "Bob"
+    "name": "aaaaaaaaaaaaaaaaaa"
   }
 ]

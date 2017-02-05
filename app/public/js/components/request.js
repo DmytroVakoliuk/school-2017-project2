@@ -3,8 +3,8 @@
 module.exports = obj => {
     return new Promise((resolve, reject) => {
         let xhr = new XMLHttpRequest();
-
-        xhr.open(obj.method || "GET", obj.url);
+        console.log(obj);
+        xhr.open(obj.method, obj.url);
         if (obj.headers) {
             Object.keys(obj.headers).forEach(key => {
                 xhr.setRequestHeader(key, obj.headers[key]);

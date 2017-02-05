@@ -1,6 +1,6 @@
 "use strict";
 const request = require("./request");
-const deleteUser = require("./deleteMethod");
+const helpers = require("./helpers");
 
 module.exports = function () {
 
@@ -21,14 +21,12 @@ module.exports = function () {
             document.getElementById("tableUsers").innerHTML = html;
 
             let deleteButtons = document.getElementsByClassName("delete");
-            for(let i = 0, len = deleteButtons.length; i < len; i++) {
-                deleteButtons[i].addEventListener("click", deleteUser);
+            for (let i = 0, len = deleteButtons.length; i < len; i++) {
+                deleteButtons[i].addEventListener("click", helpers.deleteForm);
+                deleteButtons[i].nextSibling.nextSibling.addEventListener("click", helpers.updateForm);
             }
         })
         .catch(error => {
             console.log(error);
         });
-
-
-
 };
