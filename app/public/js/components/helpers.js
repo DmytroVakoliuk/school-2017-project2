@@ -10,10 +10,10 @@ function updateDB () {
     request({method: "PUT",
         url: `/users/${Number(id)}`,
         // url: `/users/`+id,
-        headers : [`Content-Type`, `application/xml`],
-        // body: JSON.stringify({name: newName})})
+        headers : [`Content-Type`, `application/json`],
+        body: JSON.stringify({name: newName})})
         // json: {name: newName}})
-        body: {name: newName}})
+        // body: {name: newName}})
         .then((body) => {
             console.log(body);
         })
