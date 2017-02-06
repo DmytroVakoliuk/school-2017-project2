@@ -15,7 +15,7 @@ module.exports = function () {
             });
             document.getElementById("tableUsers").innerHTML = html;
 
-            helpers.listeners();
+            helpers.listener();
         })
         .catch(error => {
             console.log(error);

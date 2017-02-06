@@ -3,13 +3,7 @@
 module.exports = obj => {
     return new Promise((resolve, reject) => {
         let xhr = new XMLHttpRequest();
-        // console.log(obj);
         xhr.open(obj.method, obj.url);
-/*        if (obj.headers) {
-            Object.keys(obj.headers).forEach(key => {
-                xhr.setRequestHeader(key, obj.headers[key]);
-            });
-        }*/
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onload = () => {
             if (xhr.status >= 200 && xhr.status < 300) {
